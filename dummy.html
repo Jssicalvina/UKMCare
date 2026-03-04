@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UKM Care Simple</title>
+</head>
+<body>
+
+<h2>UKM Care - Sistem Pengaduan</h2>
+
+<h3>Tambah Laporan</h3>
+<input type="text" id="nama" placeholder="Nama"><br><br>
+<input type="text" id="ukm" placeholder="Nama UKM"><br><br>
+<textarea id="laporan" placeholder="Isi Laporan"></textarea><br><br>
+<button onclick="tambah()">Tambah</button>
+
+<h3>Daftar Laporan</h3>
+<ul id="list"></ul>
+
+<script>
+    let data = [];
+
+    function tampilkan() {
+        let list = document.getElementById("list");
+        list.innerHTML = "";
+
+        data.forEach((item, index) => {
+            list.innerHTML += `
+                <li>
+                    <b>${item.nama}</b> (${item.ukm})<br>
+                    ${item.laporan}<br>
+                    <button onclick="hapus(${index})">Hapus</button>
+                    <hr>
+                </li>
+            `;
+        });
+    }
+
+    function tambah() {
+        let nama = document.getElementById("nama").value;
+        let ukm = document.getElementById("ukm").value;
+        let laporan = document.getElementById("laporan").value;
+
+        if (nama === "" || ukm === "" || laporan === "") {
+            alert("Isi semua data!");
+            return;
+        }
+
+        data.push({ nama, ukm, laporan });
+
+        document.getElementById("nama").value = "";
+        document.getElementById("ukm").value = "";
+        document.getElementById("laporan").value = "";
+
+        tampilkan();
+    }
+
+    function hapus(index) {
+        data.splice(index, 1);
+        tampilkan();
+    }
+</script>
+
+</body>
+</html>
