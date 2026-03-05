@@ -1,0 +1,5 @@
+Dummy File
+
+This file is intentionally created as a placeholder for a new Git branch.
+
+You can safely remove or replace this file later.
