@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dummy User App</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        input { margin: 5px; }
+        button { margin: 5px; }
+    </style>
+</head>
+<body>
+
+<h2>User List</h2>
+<ul id="userList"></ul>
+
+<h3>Add User</h3>
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<button onclick="addUser()">Add</button>
+
+<script>
+
+async function loadUsers() {
+    const res = await fetch("http://127.0.0.1:5000/api/users");
+    const data = await res.json();
+
+    const list = document.getElementById("userList");
+    list.innerHTML = "";
+
+    data.forEach(user => {
+        const li = document.createElement("li");
+        li.innerText = user.name + " - " + user.email;
+        list.appendChild(li);
+    });
+}
+
+async function addUser() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+
+    await fetch("http://127.0.0.1:5000/api/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email
+        })
+    });
+
+    loadUsers();
+}
+
+loadUsers();
+
+</script>
+
+</body>
+</html>
